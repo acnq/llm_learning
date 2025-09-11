@@ -15,7 +15,7 @@ def get_openai_key():
 
 client = OpenAI(api_key=get_openai_key(), base_url="https://api.deepseek.com/beta")
 
-def get_completion(prompt, model="deepseek-chat"):
+def get_completion(prompt, model="deepseek-chat", temperature=0):
   '''
   prompt: 对应的提示词
   model: 调用的模型，默认为 gpt-3.5-turbo(ChatGPT)，有内测资格的用户可以选择 gpt-4
@@ -24,10 +24,17 @@ def get_completion(prompt, model="deepseek-chat"):
   response = client.chat.completions.create(
     model=model,
     messages=messages,
-    temperature=0,
+    temperature=temperature,
   )
   # 调用OpenAI的ChatCompletion 接口
   return response.choices[0].message.content
 
-  
+def get_completion_from_messages(messages, model="deepseek-chat", temperature=0):
+  response = client.chat.completions.create(
+    model=model,
+    messages=messages,
+    temperature=temperature,
+  )
+  # 调用OpenAI的ChatCompletion 接口
+  return response.choices[0].message.content
   
